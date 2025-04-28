@@ -57,30 +57,76 @@ cp config_example.ini config.ini
 
 Le fichier `config.ini` contient tous les paramètres nécessaires à l'exécution des scripts.
 
-### Exemple :
 
-```ini
-[DEFAULT]
-visa_address = GPIB0::22::INSTR
-V_min = 0
-V_max = 5
-nb_points = 50
-duree_point = 0.5
-mesure = resistance
-```
+### Table des matières
 
-### Description des paramètres
-
-| Paramètre     | Type    | Description                                                      | Utilisé dans |
-|:--------------|:--------|:------------------------------------------------------------------|:-------------|
-| `visa_address`| String  | Adresse VISA de l'appareil (ex: `GPIB0::22::INSTR`)               | Tous         |
-| `V_min`       | Float   | Tension minimale appliquée (en Volts)                             | Tous         |
-| `V_max`       | Float   | Tension maximale appliquée (en Volts)                             | Tous         |
-| `nb_points`   | Entier  | Nombre de points dans la rampe de tension                         | `main_rampe.py` |
-| `duree_point` | Float   | Temps (en secondes) d'attente à chaque niveau de tension          | Tous         |
-| `mesure`      | String  | Type de mesure réalisée (`resistance` ou `tension`)               | Tous         |
+- [General](#general)
+- [Alimentation](#alimentation)
+- [Meter](#meter)
+- [Mesure](#mesure)
+- [Mesure_carre](#mesure_carre)
 
 ---
+
+### <a name="general"></a> [General]
+
+| Paramètre           | Type    | Description                                                        |
+|:--------------------|:--------|:-------------------------------------------------------------------|
+| `decimal_separator` | String  | Séparateur décimal utilisé dans les fichiers (`.` ou `,`)          |
+| `file_format`       | String  | Extension des fichiers de données (`.txt`, `.csv`, etc.)           |
+| `column_separator`  | String  | Séparateur de colonnes dans les fichiers (`;`, `,`, etc.)           |
+| `decimales`         | Entier  | Nombre de chiffres après la virgule pour les mesures enregistrées  |
+
+---
+
+### <a name="alimentation"></a> [Alimentation]
+
+| Paramètre         | Type    | Description                                                                  |
+|:------------------|:--------|:----------------------------------------------------------------------------|
+| `classe`          | String  | Modèle ou classe de l'alimentation utilisée (ex: `Itech6517D`)               |
+| `address`         | String  | Adresse VISA de l'alimentation (`TCPIP0::192.168.0.200::inst0::INSTR`)        |
+| `volt_max`        | Float   | Tension maximale autorisée (en Volts)                                        |
+| `curr_max`        | Float   | Courant maximal autorisé sous tension (en Ampères)                          |
+| `curr_prot_lev`   | Float   | Niveau de protection en courant (seuil de sécurité, en Ampères)             |
+
+---
+
+### <a name="meter"></a> [Meter]
+
+| Paramètre         | Type    | Description                                                                  |
+|:------------------|:--------|:----------------------------------------------------------------------------|
+| `classe`          | String  | Modèle ou classe du multimètre utilisé (ex: `Keithley2000`)                  |
+| `gpib_address`    | String  | Adresse GPIB du multimètre (`GPIB0::16::INSTR`)                               |
+
+---
+
+### <a name="mesure"></a> [Mesure]
+
+| Paramètre         | Type    | Description                                                                   |
+|:------------------|:--------|:----------------------------------------------------------------------------|
+| `v1`              | Float   | Tension de départ pour la mesure (en Volts)                                   |
+| `v2`              | Float   | Tension finale pour la mesure (en Volts)                                      |
+| `step`            | Float   | Pas de tension entre deux mesures (en Volts)                                  |
+| `delay`           | Float   | Temps d'attente après application de chaque niveau de tension (en secondes)   |
+| `final_delay`     | Float   | Temps d'attente à la fin de la série de mesures (en secondes)                  |
+| `hysteresis`      | Booléen | Active ou non un cycle aller-retour de tension (descente puis remontée)        |
+
+---
+
+### <a name="mesure_carre"></a> [Mesure_carre]
+
+| Paramètre         | Type    | Description                                                               |
+|:------------------|:--------|:-------------------------------------------------------------------------|
+| `v1`              | Float   | Tension basse appliquée (en Volts)                                        |
+| `v2`              | Float   | Tension haute appliquée (en Volts)                                        |
+| `delay_v1`        | Float   | Durée de maintien de la tension `v1` avant changement (en secondes)      |
+| `delay_v2`        | Float   | Durée de maintien de la tension `v2` avant changement (en secondes)      |
+| `n`               | Entier  | Nombre de cycles complets (basse + haute tension) à réaliser              |
+| `measure_delay`   | Float   | Temps entre deux mesures pendant les phases de stabilisation (en secondes) |
+
+---
+
+
 
 ## Utilisation
 
